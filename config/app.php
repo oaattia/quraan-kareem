@@ -167,6 +167,8 @@ return [
          * Package Service Providers...
          */
 
+        // if we want to import the database to a seed files
+        // Orangehill\Iseed\IseedServiceProvider::class,
         //
 
         /*

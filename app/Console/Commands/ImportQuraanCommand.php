@@ -43,7 +43,9 @@ class ImportQuraanCommand extends Command
      */
     public function handle()
     {
+        $this->info('Importing ...');
         dispatch(new ImportQuraanJob());
+        $this->info('Done importing!!');
     }
 
 }
