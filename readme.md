@@ -1,4 +1,4 @@
-# El Quraan el kareem  االقرأن لكريم 
+# El Quraan el kareem  القرآن الكرِيم
 
 > Still Under Development
 
