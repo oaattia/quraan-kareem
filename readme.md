@@ -13,21 +13,25 @@ The database consist of the following mysql tables .
     - number
     - created_at
     - updated_at
-<img src="http://s16.postimg.org/mghfe2v3p/ezgif_com_optimize.gif" alt="Laravel Langman">
-  
+
+![Image of Ayaats table](http://pichoster.net/oU2)
+
+- soraah
+     - id
+     - name
+     - ayaat_count
+     - created_at
+     - updated_at
+
+![Image of Soraah table](http://pichoster.net/oU6)
+
 - mofaseers
     - id
     - name
     - created_at
     - updated_at
     
-- soraah
-    - id
-    - name
-    - ayaat_count
-    - created_at
-    - updated_at
-    
+
 - tafaseers
     - id
     - ayaat_id
