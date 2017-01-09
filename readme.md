@@ -23,7 +23,8 @@ The database consist of the following mysql tables .
      - created_at
      - updated_at
 
-![Image of Soraah table](http://pichoster.net/oU6)
+![alt text](http://pichoster.net/oU6 "Image of Soraah table")
+
 
 - mofaseers
     - id
