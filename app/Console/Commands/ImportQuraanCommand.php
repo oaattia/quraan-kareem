@@ -4,18 +4,20 @@ namespace App\Console\Commands;
 
 use App\Jobs\ImportQuraanJob;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ImportQuraanCommand extends Command
 {
+    use ConfirmableTrait;
+    
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'quraan:import';
-
+    
     /**
      * The console command description.
      *
@@ -26,7 +28,7 @@ class ImportQuraanCommand extends Command
      * @var Crawler
      */
     private $crawler;
-
+    
     /**
      * Create a new command instance.
      *
@@ -35,7 +37,7 @@ class ImportQuraanCommand extends Command
     {
         parent::__construct();
     }
-
+    
     /**
      * Import Quraan text from files
      *
@@ -43,9 +45,13 @@ class ImportQuraanCommand extends Command
      */
     public function handle()
     {
+        if ( ! $this->confirmToProceed()) {
+            return;
+        }
+        
         $this->info('Importing ...');
         dispatch(new ImportQuraanJob());
         $this->info('Done importing!!');
     }
-
+    
 }

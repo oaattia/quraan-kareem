@@ -3,9 +3,13 @@
 namespace App\Console\Commands\Elastic;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class IndexDocumentCommand extends Command
 {
+
+    use ConfirmableTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -37,6 +41,10 @@ class IndexDocumentCommand extends Command
      */
     public function handle()
     {
+        // check before going to production
+        if ( ! $this->confirmToProceed()) {
+            return;
+        }
 
         $params = [
             'index' => $this->argument('index'),
