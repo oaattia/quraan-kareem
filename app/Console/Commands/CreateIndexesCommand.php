@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Ayaat;
 use App\Soraah;
 use Illuminate\Console\Command;
 
@@ -38,53 +39,57 @@ class CreateIndexesCommand extends Command
      */
     public function handle()
     {
-        $soraah = new Soraah();
-
-        $columns = array_keys($columnsArray = $soraah->all()->first()->toArray());
-
-        $arguments['index'] = $soraah->getTable();
-
-        foreach (array_values($columnsArray) as $key => $column) {
-            $types[$columns[$key]]['type'] = gettype($column);
-        }
-
-        $arguments['mappings'] = [
-            $arguments['index'] => [
-                '_all' => [
-                    'enabled' => false
-                ],
-            ],
+        $modelsList = [
+            new Soraah(),
+            new Ayaat(),
         ];
 
-        if(isset($types)) {
-            $arguments['mappings'][$soraah->getTable()] = array_add($arguments['mappings'][$soraah->getTable()], 'properties', $types);
+        foreach ($modelsList as $model) {
+
+            $columns = array_keys($columnsArray = $model->all()->first()->toArray());
+            $arguments['index'] = $model->getTable();
+
+            foreach (array_values($columnsArray) as $key => $column) {
+                $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key]);
+            }
+
+            $arguments['mappings'] = [
+                $arguments['index'] => [
+                    '_all' => [
+                        'enabled' => false
+                    ],
+                ],
+            ];
+
+            if(isset($types)) {
+                $arguments['mappings'][$model->getTable()] = array_add($arguments['mappings'][$model->getTable()], 'properties', $types);
+            }
+
+            $this->call('elastic:create.index', $arguments);
+
         }
 
+    }
 
+    /**
+     * We change the type of specific columns name
+     *
+     * @param string $column
+     *
+     * @return string $type
+     */
+    private function fetchRightType($column)
+    {
+        switch ($column) {
+            case 'created_at':
+            case 'updated_at':
+                $type = 'date';
+                break;
+            default:
+                $type = gettype($column);
+                break;
+        }
 
-        // May be ..
-        //        $arguments['analysis'] = [
-//        'filter' => [
-//            'shingle' => [
-//                'type' => 'shingle'
-//            ]
-//        ],
-//        'char_filter' => [
-//            'pre_negs' => [
-//                'type' => 'pattern_replace',
-//                'pattern' => '(\\w+)\\s+((?i:never|no|nothing|nowhere|noone|none|not|havent|hasnt|hadnt|cant|couldnt|shouldnt|wont|wouldnt|dont|doesnt|didnt|isnt|arent|aint))\\b',
-//                'replacement' => '~$1 $2'
-//            ],
-//        ],
-//        'analyzer' => [
-//            'reuters' => [
-//                'type' => 'custom',
-//                'tokenizer' => 'standard',
-//                'filter' => ['lowercase', 'stop', 'kstem']
-//            ]
-//        ]
-//    ];
-
-        $this->call('elastic:create.index', $arguments);
+        return $type;
     }
 }
