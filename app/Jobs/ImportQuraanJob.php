@@ -11,7 +11,7 @@ class ImportQuraanJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return boolean
+     * @return boolean|null
      */
     public function handle()
     {
@@ -37,7 +37,7 @@ class ImportQuraanJob implements ShouldQueue
     /**
      * @param $text
      *
-     * @return mixed
+     * @return string
      */
     private function fetchSoraaTitle($text)
     {
@@ -48,7 +48,7 @@ class ImportQuraanJob implements ShouldQueue
     /**
      * Fetch Soraa Title
      *
-     * @param $url
+     * @param string $url
      *
      * @return Crawler $crawler
      */
@@ -77,7 +77,7 @@ class ImportQuraanJob implements ShouldQueue
     }
 
     /**
-     * @param $url
+     * @param string $url
      *
      * @return array
      */
