@@ -2,12 +2,11 @@
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
-
     public function setUp()
     {
         $directory = __DIR__ .'/dump/';
 
-        if(file_exists($directory) ) {
+        if (file_exists($directory)) {
             exec('rm -rf ' . $directory);
         }
 

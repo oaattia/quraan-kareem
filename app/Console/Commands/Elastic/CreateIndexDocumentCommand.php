@@ -7,7 +7,6 @@ use Illuminate\Console\ConfirmableTrait;
 
 class CreateIndexDocumentCommand extends Command
 {
-
     use ConfirmableTrait;
 
     /**
@@ -42,7 +41,7 @@ class CreateIndexDocumentCommand extends Command
     public function handle()
     {
         // check before going to production
-        if ( ! $this->confirmToProceed()) {
+        if (! $this->confirmToProceed()) {
             return;
         }
 
@@ -51,11 +50,11 @@ class CreateIndexDocumentCommand extends Command
             'number_of_replicas' => $this->option('replicas'),
         ];
 
-        if ( ! empty($this->argument('analysis'))) {
+        if (! empty($this->argument('analysis'))) {
             $body = array_add($body['settings'], 'analysis', $this->argument('analysis'));
         }
 
-        if ( ! empty($this->argument('mappings'))) {
+        if (! empty($this->argument('mappings'))) {
             $body = array_add($body, 'mappings', $this->argument('mappings'));
         }
 
