@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Elastic;
 
-use App\Ayaat;
-use App\Soraah;
 use Illuminate\Console\Command;
 
 class CreateIndexesCommand extends Command

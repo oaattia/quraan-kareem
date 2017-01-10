@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CreateIndexesCommand;
 use App\Console\Commands\Elastic\CreateIndexDocumentCommand;
+use App\Console\Commands\Elastic\CreateIndexesCommand;
 use App\Console\Commands\ImportQuraanCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
