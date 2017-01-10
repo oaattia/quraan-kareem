@@ -11,6 +11,7 @@ class IndexAllCommandTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->removeIndex('dump_table');
         $this->app['db']->connection()
                         ->getSchemaBuilder()
                         ->create('dump_table', function (Blueprint $table) {
@@ -26,7 +27,7 @@ class IndexAllCommandTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
-        $this->removeIndex();
+        $this->removeIndex('dump_table');
     }
 
     /** @test */
@@ -47,36 +48,25 @@ class IndexAllCommandTest extends TestCase
 
         $response = client()->indices()->getMapping();
 
-        $this->assertEquals($response['dump_table']['mappings']['dump_table']['properties'], [
-            "bool"       => [
-                "type" => "string",
-            ],
-            "created_at" => [
-                "type"   => "date",
-                "format" => "strict_date_optional_time||epoch_millis",
-            ],
-            "id"         => [
-                "type" => "integer",
-            ],
-            "ip"         => [
-                "type" => "string",
-            ],
-            "name"       => [
-                "type" => "string",
-            ],
-            "number"     => [
-                "type" => "string",
-            ],
-            "updated_at" => [
-                "type"   => "date",
-                "format" => "strict_date_optional_time||epoch_millis",
-            ],
+        $this->assertEquals(array_get($response, 'dump_table.mappings.dump_table.properties'), [
+            "bool"       => ["type" => "string"],
+            "created_at" => ["type" => "date", "format" => "strict_date_optional_time||epoch_millis"],
+            "id"         => ["type" => "integer"],
+            "ip"         => ["type" => "string"],
+            "name"       => ["type" => "string"],
+            "number"     => ["type" => "string"],
+            "updated_at" => ["type" => "date", "format" => "strict_date_optional_time||epoch_millis"]
         ]);
     }
 
-    public function removeIndex()
+    private function removeIndex($indexName)
     {
-        $params   = ['index' => 'dump_table'];
+        $params = ['index' => $indexName];
+
+        if ( ! client()->indices()->exists($params)) {
+            return false;
+        }
+
         $response = client()->indices()->delete($params);
 
         return $response['acknowledged'];
@@ -85,26 +75,7 @@ class IndexAllCommandTest extends TestCase
 
 class DumpTableModel extends \Illuminate\Database\Eloquent\Model
 {
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'dump_table';
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
     protected $dates = [];
-
 }

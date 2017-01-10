@@ -12,7 +12,7 @@ if (! function_exists('client')) {
     function client()
     {
         return ClientBuilder::create()->setHosts([
-            config('elasticsearch.host')
+            Config::get('elasticsearch.host')
         ])->build();
     }
 }
