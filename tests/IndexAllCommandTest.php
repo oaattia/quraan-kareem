@@ -31,7 +31,7 @@ class IndexAllCommandTest extends TestCase
     }
 
     /** @test */
-    public function it_should_index_withmedium_integer_right_types()
+    public function it_should_index_with_the_right_types()
     {
         $this->app['db']->connection()->table('dump_table')->insert(
             [
@@ -49,12 +49,12 @@ class IndexAllCommandTest extends TestCase
         $response = client()->indices()->getMapping();
 
         $this->assertEquals(array_get($response, 'dump_table.mappings.dump_table.properties'), [
-            "bool"       => ["type" => "string"],
+            "bool"       => ["type" => "integer"],
             "created_at" => ["type" => "date", "format" => "strict_date_optional_time||epoch_millis"],
             "id"         => ["type" => "integer"],
             "ip"         => ["type" => "string"],
             "name"       => ["type" => "string"],
-            "number"     => ["type" => "string"],
+            "number"     => ["type" => "integer"],
             "updated_at" => ["type" => "date", "format" => "strict_date_optional_time||epoch_millis"]
         ]);
     }

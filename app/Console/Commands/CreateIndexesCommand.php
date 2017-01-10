@@ -46,9 +46,8 @@ class CreateIndexesCommand extends Command
 
             $columns = array_keys($columnsArray = $model->all()->first()->toArray());
             $arguments['index'] = $model->getTable();
-
-            foreach (array_values($columnsArray) as $key => $column) {
-                $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key], $column);
+            foreach (array_values($columnsArray) as $key => $value) {
+                $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key], $value);
             }
 
             $arguments['mappings'] = [
@@ -79,6 +78,12 @@ class CreateIndexesCommand extends Command
      */
     private function fetchRightType($column, $value)
     {
+        if( is_bool($value) ) {
+            $value = (bool) $value;
+        } elseif (is_numeric($value) && $column !== 'id') {
+            $value = (int) $value;
+        }
+
         switch ($column) {
             case 'created_at':
             case 'updated_at':
