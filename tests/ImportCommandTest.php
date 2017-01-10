@@ -19,7 +19,5 @@ class ImportCommandTest extends TestCase
         $this->seeInDatabase('ayaats', [
             'soraah_id' => '114'
         ]);
-
-        // we should add more tests but later not now
     }
 }

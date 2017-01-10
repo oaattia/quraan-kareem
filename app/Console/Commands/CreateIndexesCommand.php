@@ -13,7 +13,7 @@ class CreateIndexesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'elastic:create.all_indexes';
+    protected $signature = 'elastic:create.all_indexes {models}';
 
     /**
      * The console command description.
@@ -39,18 +39,16 @@ class CreateIndexesCommand extends Command
      */
     public function handle()
     {
-        $modelsList = [
-            new Soraah(),
-            new Ayaat(),
-        ];
+        $modelsList = $this->argument('models');
 
         foreach ($modelsList as $model) {
+            $model = new $model();
 
             $columns = array_keys($columnsArray = $model->all()->first()->toArray());
             $arguments['index'] = $model->getTable();
 
             foreach (array_values($columnsArray) as $key => $column) {
-                $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key]);
+                $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key], $column);
             }
 
             $arguments['mappings'] = [
@@ -75,10 +73,11 @@ class CreateIndexesCommand extends Command
      * We change the type of specific columns name
      *
      * @param string $column
+     * @param mixed $value
      *
      * @return string $type
      */
-    private function fetchRightType($column)
+    private function fetchRightType($column, $value)
     {
         switch ($column) {
             case 'created_at':
@@ -86,7 +85,7 @@ class CreateIndexesCommand extends Command
                 $type = 'date';
                 break;
             default:
-                $type = gettype($column);
+                $type = gettype($value);
                 break;
         }
 
