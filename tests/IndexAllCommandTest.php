@@ -63,7 +63,7 @@ class IndexAllCommandTest extends TestCase
     {
         $params = ['index' => $indexName];
 
-        if ( ! client()->indices()->exists($params)) {
+        if (! client()->indices()->exists($params)) {
             return false;
         }
 

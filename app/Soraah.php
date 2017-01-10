@@ -38,5 +38,4 @@ class Soraah extends Model
     {
         return $this->hasMany(Ayaat::class, 'soraah_id');
     }
-
 }

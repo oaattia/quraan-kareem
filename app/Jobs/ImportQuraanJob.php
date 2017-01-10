@@ -31,7 +31,6 @@ class ImportQuraanJob implements ShouldQueue
                 ]);
             }
         }
-
     }
 
 
@@ -84,11 +83,10 @@ class ImportQuraanJob implements ShouldQueue
      */
     public function getSoraaTitleAndContent($url)
     {
-
         $i = 1;
 
         // Number of quraan verses ( soraas )
-        while($i <= 114) {
+        while ($i <= 114) {
             $crawler                = $this->websiteToImportFrom($url . 'read-' . $i . '.html');
             $soraTitle[]            = $this->fetchSoraaTitle($crawler->filter('title')->text());
             $quraanAyaat[]          = $this->fetchSoraaContent($crawler->filter('p[id=read] > a'));

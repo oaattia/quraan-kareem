@@ -56,14 +56,12 @@ class CreateIndexesCommand extends Command
                 ],
             ];
 
-            if(isset($types)) {
+            if (isset($types)) {
                 $arguments['mappings'][$model->getTable()] = array_add($arguments['mappings'][$model->getTable()], 'properties', $types);
             }
 
             $this->call('elastic:create.index', $arguments);
-
         }
-
     }
 
     /**
@@ -76,7 +74,7 @@ class CreateIndexesCommand extends Command
      */
     private function fetchRightType($column, $value)
     {
-        if( is_bool($value) ) {
+        if (is_bool($value)) {
             $value = (bool) $value;
         } elseif (is_numeric($value) && $column !== 'id') {
             $value = (int) $value;

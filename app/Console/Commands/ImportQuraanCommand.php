@@ -45,7 +45,7 @@ class ImportQuraanCommand extends Command
      */
     public function handle()
     {
-        if ( ! $this->confirmToProceed()) {
+        if (! $this->confirmToProceed()) {
             return;
         }
         
@@ -53,5 +53,4 @@ class ImportQuraanCommand extends Command
         dispatch(new ImportQuraanJob());
         $this->comment('Done importing!!');
     }
-    
 }
