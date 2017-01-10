@@ -13,7 +13,7 @@ class CreateIndexesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'elasticsearch:create.all_indexes';
+    protected $signature = 'elastic:create.all_indexes';
 
     /**
      * The console command description.
