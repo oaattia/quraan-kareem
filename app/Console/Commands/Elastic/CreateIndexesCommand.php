@@ -13,7 +13,7 @@ class CreateIndexesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'elastic:create.all_indexes {models}';
+    protected $signature = 'elastic:create.all_indexes {models*}';
 
     /**
      * The console command description.
@@ -40,14 +40,20 @@ class CreateIndexesCommand extends Command
     public function handle()
     {
         $modelsList = $this->argument('models');
-        foreach ($modelsList as $model) {
 
-            if (! $this->isClassExtendsEloquent($model)) {
-                $this->error("{$model} class not extending eloquent model, please check the model name");
+        foreach ($modelsList as $modelName) {
+            if ( ! $this->isClassExtendsEloquent($modelName)) {
+                $this->error("{$modelName} class not extending Eloquent model, please check the model name");
                 return;
             }
 
-            $model              = new $model();
+            $model = new $modelName();
+
+            if (is_null($model->all()->first())) {
+                $this->info("{$modelName} no data to contain for the model");
+                return;
+            }
+
             $columns            = array_keys($columnsArray = $model->all()->first()->toArray());
             $arguments['index'] = $model->getTable();
 
@@ -110,7 +116,7 @@ class CreateIndexesCommand extends Command
      */
     protected function isClassExtendsEloquent($class)
     {
-        if (! is_subclass_of($class, Model::class)) {
+        if ( ! is_subclass_of($class, Model::class)) {
             return false;
         }
 

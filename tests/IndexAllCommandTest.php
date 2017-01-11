@@ -33,16 +33,7 @@ class IndexAllCommandTest extends TestCase
     /** @test */
     public function it_should_index_with_the_right_types()
     {
-        $this->app['db']->connection()->table('dump_table')->insert(
-            [
-                'name'       => 'any name',
-                'number'     => 12,
-                'ip'         => '192.12.23.32',
-                'bool'       => false,
-                'created_at' => '2017-01-08 15:39:36',
-                'updated_at' => '2017-01-08 15:39:36',
-            ]
-        );
+        $this->insertDataToTable();
 
         Artisan::call('elastic:create.all_indexes', ['models' => [DumpTableModel::class]]);
 
@@ -59,29 +50,27 @@ class IndexAllCommandTest extends TestCase
         ]);
     }
 
-
     /** @test */
     public function it_should_through_error_if_model_invalid()
     {
-        $this->app['db']->connection()->table('dump_table')->insert(
-            [
-                'name'       => 'any name',
-                'number'     => 12,
-                'ip'         => '192.12.23.32',
-                'bool'       => false,
-                'created_at' => '2017-01-08 15:39:36',
-                'updated_at' => '2017-01-08 15:39:36',
-            ]
-        );
+        $this->insertDataToTable();
 
         Artisan::call('elastic:create.all_indexes', ['models' => [NotThereModel::class]]);
 
         $resultAsText = Artisan::output();
 
-        $this->assertEquals($resultAsText, NotThereModel::class . " class not extending eloquent model, please check the model name\n");
+        $this->assertEquals(trim($resultAsText), NotThereModel::class . " class not extending Eloquent model, please check the model name");
     }
 
+    /** @test */
+    public function it_should_through_error_if_table_is_empty()
+    {
+        Artisan::call('elastic:create.all_indexes', ['models' => [DumpTableModel::class]]);
 
+        $resultAsText = Artisan::output();
+
+        $this->assertEquals(trim($resultAsText), DumpTableModel::class . " no data to contain for the model");
+    }
 
     private function removeIndex($indexName)
     {
@@ -94,6 +83,20 @@ class IndexAllCommandTest extends TestCase
         $response = client()->indices()->delete($params);
 
         return $response['acknowledged'];
+    }
+
+    private function insertDataToTable()
+    {
+        $this->app['db']->connection()->table('dump_table')->insert(
+            [
+                'name'       => 'any name',
+                'number'     => 12,
+                'ip'         => '192.12.23.32',
+                'bool'       => false,
+                'created_at' => '2017-01-08 15:39:36',
+                'updated_at' => '2017-01-08 15:39:36',
+            ]
+        );
     }
 }
 
