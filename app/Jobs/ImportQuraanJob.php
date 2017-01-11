@@ -69,6 +69,8 @@ class ImportQuraanJob implements ShouldQueue
      */
     private function fetchSoraaContent($quraanAyaat)
     {
+        $text = [];
+
         foreach ($quraanAyaat as $quraanAyaah) {
             $text[] = $quraanAyaah->textContent;
         }
@@ -86,7 +88,7 @@ class ImportQuraanJob implements ShouldQueue
         $i = 1;
         $soraTitle = [];
         $quraanAyaat = [];
-        
+
         // Number of quraan verses ( soraas )
         while ($i <= 114) {
             $crawler                = $this->websiteToImportFrom($url . 'read-' . $i . '.html');
