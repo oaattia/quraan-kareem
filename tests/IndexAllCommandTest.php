@@ -59,6 +59,30 @@ class IndexAllCommandTest extends TestCase
         ]);
     }
 
+
+    /** @test */
+    public function it_should_through_error_if_model_invalid()
+    {
+        $this->app['db']->connection()->table('dump_table')->insert(
+            [
+                'name'       => 'any name',
+                'number'     => 12,
+                'ip'         => '192.12.23.32',
+                'bool'       => false,
+                'created_at' => '2017-01-08 15:39:36',
+                'updated_at' => '2017-01-08 15:39:36',
+            ]
+        );
+
+        Artisan::call('elastic:create.all_indexes', ['models' => [NotThereModel::class]]);
+
+        $resultAsText = Artisan::output();
+
+        $this->assertEquals($resultAsText, NotThereModel::class . " class not extending eloquent model, please check the model name\n");
+    }
+
+
+
     private function removeIndex($indexName)
     {
         $params = ['index' => $indexName];

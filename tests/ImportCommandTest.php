@@ -8,14 +8,14 @@ class ImportCommandTest extends TestCase
 {
     use DatabaseMigrations, DatabaseTransactions;
 
-    public function testIfWeImportedDataSuccessfully()
+    /** @test */
+    public function it_should_import_data_successfully()
     {
         Artisan::call('quraan:import');
 
         $this->seeInDatabase('soraahs', [
             'id' => '114'
         ]);
-
         $this->seeInDatabase('ayaats', [
             'soraah_id' => '114'
         ]);

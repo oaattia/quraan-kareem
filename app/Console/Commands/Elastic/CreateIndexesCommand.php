@@ -3,6 +3,8 @@
 namespace App\Console\Commands\Elastic;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
+
 
 class CreateIndexesCommand extends Command
 {
@@ -38,12 +40,17 @@ class CreateIndexesCommand extends Command
     public function handle()
     {
         $modelsList = $this->argument('models');
-
         foreach ($modelsList as $model) {
-            $model = new $model();
 
-            $columns = array_keys($columnsArray = $model->all()->first()->toArray());
+            if (! $this->isClassExtendsEloquent($model)) {
+                $this->error("{$model} class not extending eloquent model, please check the model name");
+                return;
+            }
+
+            $model              = new $model();
+            $columns            = array_keys($columnsArray = $model->all()->first()->toArray());
             $arguments['index'] = $model->getTable();
+
             foreach (array_values($columnsArray) as $key => $value) {
                 $types[$columns[$key]]['type'] = $this->fetchRightType($columns[$key], $value);
             }
@@ -51,13 +58,14 @@ class CreateIndexesCommand extends Command
             $arguments['mappings'] = [
                 $arguments['index'] => [
                     '_all' => [
-                        'enabled' => false
+                        'enabled' => false,
                     ],
                 ],
             ];
 
             if (isset($types)) {
-                $arguments['mappings'][$model->getTable()] = array_add($arguments['mappings'][$model->getTable()], 'properties', $types);
+                $arguments['mappings'][$model->getTable()] = array_add($arguments['mappings'][$model->getTable()],
+                    'properties', $types);
             }
 
             $this->call('elastic:create.index', $arguments);
@@ -65,19 +73,19 @@ class CreateIndexesCommand extends Command
     }
 
     /**
-     * We change the type of specific columns name
+     * change the type of specific column
      *
      * @param string $column
      * @param mixed $value
      *
      * @return string $type
      */
-    private function fetchRightType($column, $value)
+    protected function fetchRightType($column, $value)
     {
         if (is_bool($value)) {
-            $value = (bool) $value;
+            $value = (bool)$value;
         } elseif (is_numeric($value) && $column !== 'id') {
-            $value = (int) $value;
+            $value = (int)$value;
         }
 
         switch ($column) {
@@ -91,5 +99,21 @@ class CreateIndexesCommand extends Command
         }
 
         return $type;
+    }
+
+    /**
+     * Check if the class passed extends Laravel Eloquent
+     *
+     * @param string $class
+     *
+     * @return bool
+     */
+    protected function isClassExtendsEloquent($class)
+    {
+        if (! is_subclass_of($class, Model::class)) {
+            return false;
+        }
+
+        return true;
     }
 }
