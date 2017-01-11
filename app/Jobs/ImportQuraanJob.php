@@ -84,7 +84,9 @@ class ImportQuraanJob implements ShouldQueue
     public function getSoraaTitleAndContent($url)
     {
         $i = 1;
-
+        $soraTitle = [];
+        $quraanAyaat = [];
+        
         // Number of quraan verses ( soraas )
         while ($i <= 114) {
             $crawler                = $this->websiteToImportFrom($url . 'read-' . $i . '.html');
