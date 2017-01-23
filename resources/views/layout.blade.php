@@ -15,23 +15,30 @@
 
     <!-- FONT
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Amiri" rel="stylesheet">
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-    <link rel="stylesheet" href="{{ asset('css/skeleton.css') }}">
-    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    @if(config('app.locale') != 'ar')
+        <link rel="stylesheet" href="{{ asset('css/skeleton.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('css/skeleton-rtl.css') }}">
+    @endif
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.png">
 
+    @yield('styles')
+
+    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 </head>
 <body>
 
 @yield('content')
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+@yield('scripts')
 </body>
 </html>
