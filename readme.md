@@ -19,8 +19,6 @@ The database consist of the following mysql tables .
     - created_at
     - updated_at
 
-
-
 - soraah
      - id
      - name
@@ -28,13 +26,11 @@ The database consist of the following mysql tables .
      - created_at
      - updated_at
 
-
 - mofaseers
     - id
     - name
     - created_at
     - updated_at
-    
 
 - tafaseers
     - id
