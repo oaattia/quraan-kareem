@@ -1,17 +1,4 @@
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table ayaats
-# ------------------------------------------------------------
-
 LOCK TABLES `ayaats` WRITE;
-/*!40000 ALTER TABLE `ayaats` DISABLE KEYS */;
 
 INSERT INTO `ayaats` (`id`, `soraah_id`, `text`, `number`, `created_at`, `updated_at`)
 VALUES
@@ -6264,15 +6251,9 @@ VALUES
 	(6235,114,'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ',5,'2017-01-08 18:37:15','2017-01-08 18:37:15'),
 	(6236,114,'مِنَ الْجِنَّةِ وَالنَّاسِ',6,'2017-01-08 18:37:15','2017-01-08 18:37:15');
 
-/*!40000 ALTER TABLE `ayaats` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of table migrations
-# ------------------------------------------------------------
-
 LOCK TABLES `migrations` WRITE;
-/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`)
 VALUES
@@ -6283,25 +6264,10 @@ VALUES
 	(11,'2017_01_08_102617_create_mofaseers_table',1),
 	(12,'2017_01_08_102619_create_tafaseers_table',1);
 
-/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table mofaseers
-# ------------------------------------------------------------
-
-
-
-# Dump of table password_resets
-# ------------------------------------------------------------
-
-
-
-# Dump of table soraahs
-# ------------------------------------------------------------
-
 LOCK TABLES `soraahs` WRITE;
-/*!40000 ALTER TABLE `soraahs` DISABLE KEYS */;
 
 INSERT INTO `soraahs` (`id`, `name`, `ayaat_count`, `created_at`, `updated_at`)
 VALUES
@@ -6420,19 +6386,4 @@ VALUES
 	(113,'الفلق',5,'2017-01-08 18:37:15','2017-01-08 18:37:15'),
 	(114,'الناس',6,'2017-01-08 18:37:15','2017-01-08 18:37:15');
 
-/*!40000 ALTER TABLE `soraahs` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table tafaseers
-# ------------------------------------------------------------
-
-
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
