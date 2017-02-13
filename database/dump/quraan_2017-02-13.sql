@@ -1,5 +1,3 @@
-LOCK TABLES `ayaats` WRITE;
-
 INSERT INTO `ayaats` (`id`, `soraah_id`, `text`, `number`, `created_at`, `updated_at`)
 VALUES
 	(1,1,'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',1,'2017-01-08 18:36:59','2017-01-08 18:36:59'),
@@ -6251,24 +6249,6 @@ VALUES
 	(6235,114,'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ',5,'2017-01-08 18:37:15','2017-01-08 18:37:15'),
 	(6236,114,'مِنَ الْجِنَّةِ وَالنَّاسِ',6,'2017-01-08 18:37:15','2017-01-08 18:37:15');
 
-UNLOCK TABLES;
-
-LOCK TABLES `migrations` WRITE;
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`)
-VALUES
-	(7,'2014_10_12_000000_create_users_table',1),
-	(8,'2014_10_12_100000_create_password_resets_table',1),
-	(9,'2017_01_08_102603_create_soraahs_table',1),
-	(10,'2017_01_08_102610_create_ayaats_table',1),
-	(11,'2017_01_08_102617_create_mofaseers_table',1),
-	(12,'2017_01_08_102619_create_tafaseers_table',1);
-
-UNLOCK TABLES;
-
-
-LOCK TABLES `soraahs` WRITE;
-
 INSERT INTO `soraahs` (`id`, `name`, `ayaat_count`, `created_at`, `updated_at`)
 VALUES
 	(1,'الفاتحة',7,'2017-01-08 18:36:59','2017-01-08 18:36:59'),
@@ -6385,5 +6365,3 @@ VALUES
 	(112,'الإخلاص',4,'2017-01-08 18:37:15','2017-01-08 18:37:15'),
 	(113,'الفلق',5,'2017-01-08 18:37:15','2017-01-08 18:37:15'),
 	(114,'الناس',6,'2017-01-08 18:37:15','2017-01-08 18:37:15');
-
-UNLOCK TABLES;
