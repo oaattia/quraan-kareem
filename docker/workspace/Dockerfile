@@ -47,7 +47,6 @@ ARG PGID=1000
 RUN groupadd -g $PGID laradock && \
     useradd -u $PUID -g laradock -m laradock
 
-
 #####################################
 # SOAP:
 #####################################

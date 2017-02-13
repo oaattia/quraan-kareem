@@ -19,7 +19,7 @@ The database consist of the following mysql tables .
     - created_at
     - updated_at
 
-![alt text](https://github.com/oaattia/quraan-kareem/raw/master/public/demo/img/ayaats.png "Image of Ayaats table")
+
 
 - soraah
      - id
@@ -27,8 +27,6 @@ The database consist of the following mysql tables .
      - ayaat_count
      - created_at
      - updated_at
-
-![alt text](https://github.com/oaattia/quraan-kareem/raw/master/public/demo/img/soraahs.png "Image of Soraah table")
 
 
 - mofaseers
