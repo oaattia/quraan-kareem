@@ -41,6 +41,12 @@ The database consist of the following mysql tables .
     
 - migrations
 
+### Import quraan from dump file
+
+```
+php artisan quraan:import
+```
+
 
 ### Search through Ayats and Tafseer
 I will be using elasticsearch to do that, i want to add autocomplete feature when search for a keyword, it will consist of the following : 
@@ -50,7 +56,7 @@ I will be using elasticsearch to do that, i want to add autocomplete feature whe
 
 For start with index the document, i created a command that can be used like the following : 
 ```
-php artisan elasticsearch:index {index} {type} {id}
+php artisan elastic:create.index {index} {type} {id}
 ```
 
 # The MIT License (MIT)

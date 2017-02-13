@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\ImportQuraanJob;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ImportQuraanCommand extends Command
@@ -50,7 +51,9 @@ class ImportQuraanCommand extends Command
         }
         
         $this->info('Importing ...');
-        dispatch(new ImportQuraanJob());
+
+        DB::unprepared(file_get_contents(base_path('database/dump/quraan_2017-02-13.sql')));
+
         $this->comment('Done importing!!');
     }
 }
